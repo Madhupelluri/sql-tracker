@@ -1,0 +1,46 @@
+1.second highest salary in the table:
+concepts used subquery,distinct,order by desc,alias names,offset,limit,s.salary like notations
+✅ Quick Notes (Revision Style)
+Scalar Subquery → returns single value, if no result → NULL
+Normal (Table) Subquery → returns rows/table, if no result → empty set
+------------------------------------------------------------------------------------------
+A scalar subquery is a subquery that returns:
+✔ Exactly 1 row AND 1 column (a single value)
+eg syntax: SELECT salary FROM (subquery) AS t;
+📘 SQL Subquery & Alias Notes (Unit-5)
+🔹 Scalar Subquery
+A scalar subquery returns exactly 1 row and 1 column
+It produces a single value
+
+Example:
+
+SELECT (SELECT MAX(salary) FROM Employee);
+Used in SELECT, WHERE, or RETURN statements
+🔹 Derived Table (Subquery with alias)
+A subquery used in FROM clause is called a derived table
+It must have an alias using AS
+
+Example:
+
+SELECT salary
+FROM (SELECT salary FROM Employee) AS t;
+🔹 Role of alias (AS t)
+AS t is just a temporary table name
+It does NOT affect scalar property
+It helps SQL refer to subquery result as a table
+🔹 Column names in derived table
+By default, derived table keeps same column names as inner query
+
+Example:
+
+SELECT salary
+FROM (SELECT salary FROM Employee) AS t;
+
+→ column name remains salary
+
+If renamed inside subquery:
+
+SELECT salary AS s
+FROM Employee
+
+→ derived table column becomes s
