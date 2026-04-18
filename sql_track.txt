@@ -44,3 +44,65 @@ SELECT salary AS s
 FROM Employee
 
 → derived table column becomes s
+_____________________________________________________________________________________________________________________
+** rank scores**
+***my query***
+# Write your MySQL query statement below
+select score, DENSE_RANK(order by Scores) as rank
+from  order by Scores desc;
+ what is the error and  wrong syntax:
+ ❌ Missing table name after FROM
+ ❌ Wrong syntax of DENSE_RANK()
+ ❌ ORDER BY inside function is incorrect
+ ❌ Column naming mismatch (score vs Scores)
+ ✅ Correct Query (LeetCode 178)
+SELECT score,
+       DENSE_RANK() OVER (ORDER BY score DESC) AS rank
+FROM Scores;
+🧠 How this works (very important)
+Step 1: FROM Scores
+
+Take the full table.
+
+Example:
+
++-------+
+| score |
++-------+
+| 100   |
+| 90    |
+| 90    |
+| 80    |
++-------+
+Step 2: ORDER BY score DESC inside window function
+
+We sort scores internally (not output order yet):
+
+100 → highest
+90
+90
+80
+Step 3: DENSE_RANK()
+
+Assign ranks:
+
+100 → rank 1
+90 → rank 2
+90 → rank 2 (same rank, no gap)
+80 → rank 3
+✅ Final Output
++-------+------+
+| score | rank |
++-------+------+
+| 100   | 1    |
+| 90    | 2    |
+| 90    | 2    |
+| 80    | 3    |
++-------+------+
+🔥 Key Concept (Important for interviews)
+DENSE_RANK() → no gaps in ranking
+RANK() → gaps appear
+ROW_NUMBER() → always unique numbers
+1) here the order by desc inside over will not sort them physically it only sort them for reference mean when use to print 
+the values outer using select it may be in any order 
+2) if you encounter the string that is to be used to print and if it is already built in then use like `here`
