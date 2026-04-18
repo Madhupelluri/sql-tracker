@@ -106,3 +106,23 @@ ROW_NUMBER() → always unique numbers
 1) here the order by desc inside over will not sort them physically it only sort them for reference mean when use to print 
 the values outer using select it may be in any order 
 2) if you encounter the string that is to be used to print and if it is already built in then use like `here`
+____________________________________________________________________________________________________________________________
+date : 18-04-26
+todays problem : highest salary department wise
+we can do i two types
+1)# Write your MySQL query statement below
+select d.name as Department , e.name as Employee ,e.salary as Salary
+from Employee e join Department d
+on e.departmentId = d.id where e.salary = (select max(salary) from Employee e2 where e.departmentId = e2.departmentId);
+using query the first row checks for the entire rows that matches with departmentId
+and finds max if the max is present salary then this will be our answer
+2)# Write your MySQL query statement below
+select Department,Employee,Salary
+from(
+    select e.salary as Salary,e.name as Employee, d.name as Department,
+    DENSE_RANK() over (partition by d.name order by e.salary desc) as rnk
+    from Employee e join Department d on e.departmentId=d.id
+)as t where rnk=1;
+using DENSE_RANK() and over function using partition by deptname and order by salary desc and giving them ranks 
+and printing the query who has the rnk as 1
+
